@@ -40,7 +40,6 @@ function setup() {
 
 function draw() {
     background(color(62,50,75));
-    background(225);
 
     // for (let i = 0; i < nutrients.length; i++) {
     //     nutrients[i].show();
