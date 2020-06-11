@@ -42,9 +42,9 @@ function draw() {
     background(color(62,50,75));
     background(255);
 
-    // for (let i = 0; i < nutrients.length; i++) {
-    //     nutrients[i].show();
-    // }
+    for (let i = 0; i < nutrients.length; i++) {
+        nutrients[i].show();
+    }
 
     for (let i = 0; i < mycelia.length; i++) {
         mycelia[i].show();
