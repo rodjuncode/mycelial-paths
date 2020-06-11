@@ -41,8 +41,6 @@ function Mycelia(position,nutrients,color) {
                 if (d < minDistance) { // mycelia found a nutrient
                     nutrient.eaten = true;
                     break;
-                } else if (d > maxDistance) {
-                    // do nothing! This is weird, need to check it out later
                 } else if (d < record) {
                     closestHypha = hypha;
                     record = d;
@@ -50,7 +48,8 @@ function Mycelia(position,nutrients,color) {
             }
             if (closestHypha != null) { // there is a hypha close enough to a nutrient
                 console.log(closestHypha);
-                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position).normalize();
+                //let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position.normalize()); // original
+                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position);
                 closestHypha.direction.add(newDirection);
                 closestHypha.count++;
             }
