@@ -25,17 +25,6 @@ function setup() {
          nutrients.push(new Nutrient(p));
      }
 
-    // for (let i = 0; i < nutrientsQty2; i++) {
-    //     let p = createVector(random(250,450), random(50,250));
-    //     nutrients.push(new Nutrient(p));
-    // }
-
-    // for (let i = 0; i < nutrientsQty2; i++) {
-    //     let p = createVector(random(250,450), random(250,450));
-    //     nutrients.push(new Nutrient(p));
-    // }
-
-
     for (let i = 0; i < 5; i++) {
         let m = new Mycelia(createVector(width/2,height/2),nutrients,color(0));
         mycelia.push(m);
