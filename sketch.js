@@ -10,18 +10,18 @@ let maxDistance = 100;
 let minDistance = 10;
 
 function setup() {
-    createCanvas(500,500);
+    createCanvas(600,360);
     
     // organize the nutrients map
     for (let i = 0; i < nutrientsQty1; i++) {
-        let p = createVector(random(100,400), random(100,400));
+        let p = createVector(random(150,450), random(60,300));
         if (p5.Vector.dist(createVector(width/2,height/2),p) < nutrientRadius) {
             nutrients.push(new Nutrient(p));
         }
     }
 
     for (let i = 0; i < nutrientsQty2; i++) {
-         let p = createVector(random(100,400), random(100,400));
+         let p = createVector(random(150,450), random(60,300));
          nutrients.push(new Nutrient(p));
      }
 
@@ -40,11 +40,11 @@ function setup() {
 
 function draw() {
     background(color(62,50,75));
-    background(255);
+    background(225);
 
-    for (let i = 0; i < nutrients.length; i++) {
-        nutrients[i].show();
-    }
+    // for (let i = 0; i < nutrients.length; i++) {
+    //     nutrients[i].show();
+    // }
 
     for (let i = 0; i < mycelia.length; i++) {
         mycelia[i].show();

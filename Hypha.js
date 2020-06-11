@@ -15,7 +15,7 @@ function Hypha(position,parent,direction,color) {
         if (this.parent != null) {
             push();
             stroke(this.color);
-            strokeWeight(0.5);
+            strokeWeight(0.3);
             line(this.position.x,this.position.y,this.parent.position.x,this.parent.position.y);
             pop();
         }
