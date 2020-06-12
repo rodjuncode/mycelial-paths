@@ -1,60 +1,77 @@
-let m1;
-let m2;
-let m3;
 let mycelia = []
 let nutrients = [];
-let nutrientsQty1 = 1500;
-let nutrientsQty2 = 25;
-let nutrientRadius = 50;
-let maxDistance = 100;
-let minDistance = 10;
+let nutrientsQty1 = 200000;
+let nutrientsQty2 = 500;
+let nutrientRadius = 30;
+let maxDistance = 200;
+let minDistance = 2;
+
+let myceliaQty = 1;
+
+let c = 0;
+let center;
+
+let max = 100;
 
 function setup() {
     createCanvas(600,360);
-    
-    // organize the nutrients map
-    for (let i = 0; i < nutrientsQty1; i++) {
-        let p = createVector(random(150,450), random(60,300));
-        if (p5.Vector.dist(createVector(width/2,height/2),p) < nutrientRadius) {
-            nutrients.push(new Nutrient(p));
-        }
-    }
-
-    for (let i = 0; i < nutrientsQty2; i++) {
-         let p = createVector(random(150,450), random(60,300));
-         nutrients.push(new Nutrient(p));
-     }
-
-    let m = new Mycelia(createVector(width/2,height/2),nutrients,color(0));
-    mycelia.push(m);
-    for (let i = 1; i < 3; i++) {
-        let m = new Mycelia(createVector(width/2,height/2),nutrients,color(random(100)));
-        mycelia.push(m);
-    }
-
-    // m1 = new Mycelia(createVector(width/2,height/2),nutrients,color(random(220)));
-    // m2 = new Mycelia(createVector(width/2,height/2),nutrients,color(200));
-    // m3 = new Mycelia(createVector(width/2,height/2),nutrients,color(150));
-    
+    center = createVector(0,0);
+    culture(center);
 }
 
 function draw() {
     background(color(62,50,75));
-
-    // for (let i = 0; i < nutrients.length; i++) {
-    //     nutrients[i].show();
+    translate(mouseX,mouseY);
+    
+    // for (let i = 0; i < myceliaQty; i++) {
+    //     for (let j = 0; j < nutrients[i].length; j++) {
+    //         nutrients[i][j].show();
+    //     }
     // }
 
-    for (let i = 0; i < mycelia.length; i++) {
-        mycelia[i].show();
-        mycelia[i].grow();
+    if (c < 50) {
+        for (let i = 0; i < mycelia.length; i++) {
+            mycelia[i].show();
+            mycelia[i].grow();
+        }
+    } else {
+        //cursor.add(createVector(5,0));
+        center = createVector(0,0);
+        //center = createVector(width/2,height/2);
+        //center = createVector(width/2,height/2);
+        culture(center);        
+        c = 0;
     }
 
-    // m1.show();
-    // m2.show();
-    // m3.show();
-    // m1.grow();
-    // m2.grow();
-    // m3.grow();
- 
+    c++;
+
+}
+
+function culture(where) {
+    // organize the nutrients map
+    nutrients = [];
+    for (let j = 0; j < myceliaQty; j++) {
+        let newNutrients = [];
+        for (let i = 0; i < nutrientsQty1; i++) {
+            let p = createVector(random(-width,width), random(-height,height));
+            if (p5.Vector.dist(where,p) < nutrientRadius) {
+                newNutrients.push(new Nutrient(p));
+            }
+        }
+        for (let i = 0; i < nutrientsQty2; i++) {
+            let p = createVector(random(-width,width), random(-height,height));
+            if (p5.Vector.dist(where,p) < nutrientRadius*6) {
+                newNutrients.push(new Nutrient(p));
+            }
+        }
+        nutrients.push(newNutrients);
+    }
+    mycelia = [];
+    // creating multiple mycelia
+    let m = new Mycelia(where,nutrients[0],color(255));
+    mycelia.push(m);
+    for (let i = 1; i < myceliaQty; i++) {
+        let m = new Mycelia(where,nutrients[i],color(random(220,255)));
+        mycelia.push(m);
+    }
 }

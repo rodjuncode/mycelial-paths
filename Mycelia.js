@@ -11,22 +11,19 @@ function Mycelia(position,nutrients,color) {
     // starts the culture
     let current = this.spore;
     let found_nutrient = false;
-    let t = 0;
     while(!found_nutrient) {
         for (let i = 0; i < this.nutrients.length; i++) {
             let d = p5.Vector.dist(current.position, this.nutrients[i].position);
             if (d < maxDistance) {
                 found_nutrient = true;
-                break;
             }
         }
         if (!found_nutrient) {
             let h = current.next();
             current = h;
-            this.hyphae.push(h);
+            this.hyphae.push(current);
 
         }
-        t++;
     }        
 
     this.grow = function() {
@@ -34,12 +31,13 @@ function Mycelia(position,nutrients,color) {
         for (let i = 0; i < this.nutrients.length; i++) {
             let nutrient = this.nutrients[i]
             let closestHypha = null; 
-            let record = 10000;
+            let record = maxDistance;
             for (let j = 0; j < this.hyphae.length; j++) {
                 let hypha = this.hyphae[j];
                 let d = p5.Vector.dist(nutrient.position, hypha.position);
                 if (d < minDistance) { // mycelia found a nutrient
                     nutrient.eaten = true;
+                    closestHypha = null;
                     break;
                 } else if (d < record) {
                     closestHypha = hypha;
@@ -47,9 +45,9 @@ function Mycelia(position,nutrients,color) {
                 }
             }
             if (closestHypha != null) { // there is a hypha close enough to a nutrient
-                console.log(closestHypha);
-                //let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position.normalize()); // original
-                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position);
+                // steering
+                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position).normalize(); // original
+                //let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position);
                 closestHypha.direction.add(newDirection);
                 closestHypha.count++;
             }
@@ -63,11 +61,11 @@ function Mycelia(position,nutrients,color) {
             for (let i = this.hyphae.length-1; i >= 0; i--) {
                 let hypha = this.hyphae[i];
                 if (hypha.count > 0) {
-                    hypha.direction.div(hypha.count);
-                    let newHypha = hypha.next();
-                    this.hyphae.push(newHypha);
+                    hypha.direction.div(hypha.count+1);
+                    this.hyphae.push(hypha.next());
+                    hypha.reset();
                 }
-                hypha.reset();
+                // hypha.reset(); I've put here, for some reason
             }
 
         }
@@ -82,8 +80,8 @@ function Mycelia(position,nutrients,color) {
         }
         push();
         noStroke();
-        fill(225);
-        //ellipse(this.spore.position.x,this.spore.position.y,40,40);
+        fill(255);
+        //ellipse(this.spore.position.x,this.spore.position.y,5,5);
         pop();
     }
 
