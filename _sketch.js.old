@@ -17,7 +17,7 @@ let nutrients = [];
 let nutrientsQty1 = 100000;
 let nutrientsQty2 = 0;
 let nutrientsQtyMouse = 500;
-let nutrientsRadiusMouse = 50;
+let nutrientsRadiusMouse = 20;
 let nutrientRadius = 80;
 let maxDistance = 10;
 let minDistance = 5;
@@ -42,30 +42,19 @@ function setup() {
     createCanvas(600,360);
     colorMode(HSB,360,100,100);
 
-    palette = new FungiPalette([[191, 42, 25],
-                                [167, 14, 25],
-                                [45, 16, 29],
-                                [32, 35, 36],
-                                [27, 47, 44],
-                                [26, 56, 51],
+    pallete = new FungiPalette([[24, 71, 72],
+                                [24, 67, 65],
                                 [25, 62, 58],
-                                [24, 67, 65],                            
-                                [24, 71, 72],                    
-                            ],  [196, 70, 26]);
+                                [26, 56, 51],
+                                [27, 47, 44],
+                                [32, 35, 36],
+                                [45, 16, 29],
+                                [167, 14, 25],
+                                [191, 42, 25],
+                                [196, 70, 26],
+                            ]);
 
-    palette = new FungiPalette([[57, 63, 100],
-        [55, 66, 100],
-        [53, 69, 100],
-        [51, 73, 100],
-        [49, 76, 100],
-        [47, 76, 100],
-        [45, 76, 100],
-        [42, 75, 99],                            
-        [41, 77, 99], 
-        [40, 80, 99]                   
-    ],  [120, 4, 21]);
-
-
+    baseColor = [random(360),100,100,100];
 
 	// cam = createCapture(VIDEO);
 	// cam.size(width, height);
@@ -89,7 +78,9 @@ function setup() {
 
 function draw() {
 
-    background(palette.getBaseColor());
+
+    
+    background(baseColor);
 
     //image(cam,0,0);
 
@@ -157,10 +148,10 @@ function culture(where) {
     }
     mycelia = [];
     // creating multiple mycelia
-    let m = new Mycelia(where,nutrients[0],8,palette);
+    let m = new Mycelia(where,nutrients[0],baseColor);
     mycelia.push(m);
     for (let i = 1; i < myceliaQty; i++) {
-        let m = new Mycelia(where,nutrients[i],9,pallete);
+        let m = new Mycelia(where,nutrients[i],baseColor);
         mycelia.push(m);
     }
 }
@@ -232,5 +223,5 @@ function mouseClicked() {
 
 // TODOs:
 //[1] organize code
-//[2] improve palette
+//[2] create pallete
 //[3] integrate with webcam

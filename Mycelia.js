@@ -1,11 +1,12 @@
-function Mycelia(position,nutrients,color) {
+function Mycelia(position,nutrients,color,palette) {
     this.position = position;
     this.nutrients = nutrients;
     this.hyphae = [];
     this.color = color;
+    this.palette = palette;
     
     // set the spore
-    this.spore = new Hypha(position,null,createVector(random(-1,1),random(-1,1)).normalize(),this.color);
+    this.spore = new Hypha(position,null,createVector(random(-1,1),random(-1,1)).normalize(),this.color,this.palette);
     this.hyphae.push(this.spore);
 
     // starts the culture
@@ -46,8 +47,7 @@ function Mycelia(position,nutrients,color) {
             }
             if (closestHypha != null) { // there is a hypha close enough to a nutrient
                 // steering
-                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position).normalize(); // original
-                //let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position);
+                let newDirection = p5.Vector.sub(nutrient.position,closestHypha.position).normalize();
                 closestHypha.direction.add(newDirection);
                 closestHypha.count++;
             }
@@ -65,7 +65,6 @@ function Mycelia(position,nutrients,color) {
                     this.hyphae.push(hypha.next());
                     hypha.reset();
                 }
-                // hypha.reset(); I've put here, for some reason
             }
 
         }
@@ -74,7 +73,6 @@ function Mycelia(position,nutrients,color) {
     this.show = function() {
         for (let i = 1; i < this.hyphae.length; i++) {
             push();
-            fill(this.color);
             this.hyphae[i].show();
             pop();
         }
